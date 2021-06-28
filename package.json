@@ -16,7 +16,8 @@
     "test:lint": "eslint . --ext .js,.jsx",
     "test:unit": "jest test[\\\\/]unit",
     "test:smoke": "jest --runInBand test[\\\\/]smoke",
-    "watch": "webpack --colors --watch"
+    "watch": "webpack --colors --watch",
+    "rsync": "bash bin/rsync.sh"
   },
   "author": "Massachusetts Institute of Technology",
   "license": "BSD-3-Clause",
