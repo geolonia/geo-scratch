@@ -2,7 +2,6 @@ const ArgumentType = require('../../extension-support/argument-type');
 const BlockType = require('../../extension-support/block-type');
 const Cast = require('../../util/cast');
 const formatMessage = require('format-message');
-const geolonia = require('@geolonia/embed');
 
 const Message = {
 }
@@ -62,8 +61,8 @@ class Scratch3GeoloniaBlocks {
         this._locale = this.setLocale();
 
         return {
-            id: 'geolonia2scratch',
-            name: 'Geolonia2Scratch',
+            id: 'geolonia',
+            name: '地図',
             blocks: [
                 {
                     opcode: 'display',
@@ -109,7 +108,7 @@ class Scratch3GeoloniaBlocks {
         canvas.parentNode.insertBefore(div, canvas);
 
         this.map = {}
-        this.map = new global.geolonia.Map({
+        this.map = new geolonia.Map({
             container: '#geolonia-map',
             style: 'geolonia/basic',
             center: [0, 0],
