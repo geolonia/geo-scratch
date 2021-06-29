@@ -65,9 +65,9 @@ class Scratch3GeoloniaBlocks {
             name: '地図',
             blocks: [
                 {
-                    opcode: 'display',
+                    opcode: 'displayMap',
                     blockType: BlockType.COMMAND,
-                    text: '日本地図を表示',
+                    text: '地図を表示',
                 },
                 {
                     opcode: 'flyTo',
@@ -94,7 +94,7 @@ class Scratch3GeoloniaBlocks {
         };
     }
 
-    display(args) {
+    displayMap(args) {
         const mapContainer = document.getElementById('geolonia-map')
 
         if (mapContainer) {
