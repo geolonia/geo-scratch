@@ -1,3 +1,24 @@
+# Geolonia on Scratch
+
+## ワークフロー
+
+### ローカルでの起動
+
+```
+$ git clone git@github.com:geolonia/geo-scratch.git
+$ cd geo-scratch.git
+$ npm install
+$ npm start
+$ open http://127.0.0.1:8080
+```
+
+### 修正
+
+* `extensions/geolonia` 以下が Scratch のエクステンション本体
+* ファイルを修正したら `npm run rsync` で反映しないといけないので注意。
+
+---
+
 # scratch-gui
 #### Scratch GUI is a set of React components that comprise the interface for creating and running Scratch 3.0 projects
 

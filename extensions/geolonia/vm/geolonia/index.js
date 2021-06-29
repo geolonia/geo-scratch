@@ -20,9 +20,9 @@ class Scratch3Geolonia2ScratchBlocks {
         div.id = 'map';
         div.dataset.style = 'geolonia/homework';
 
-        div.setAttribute("style", "width:100%;height:100%;opacity:0.5;position:absolute;top:0px;");
+        div.setAttribute("style", "width:100%;height:100%;position:absolute;top:0px;");
         let canvas = document.getElementsByTagName('canvas')[0];
-        canvas.parentNode.appendChild(div);
+        canvas.parentNode.insertBefore(div, canvas);
 
         this.map = new global.geolonia.Map('#map');
     }
@@ -52,7 +52,7 @@ class Scratch3Geolonia2ScratchBlocks {
                 {
                     opcode: 'panTo',
                     blockType: BlockType.COMMAND,
-                    text: "経度 [LNG] 緯度 [LAT] に移動",
+                    text: "経度 [LNG] 緯度 [LAT] ズーム [ZOOM] に移動",
                     arguments: {
                       LNG: {
                         type: ArgumentType.NUMBER,
@@ -61,7 +61,11 @@ class Scratch3Geolonia2ScratchBlocks {
                       LAT: {
                         type: ArgumentType.NUMBER,
                         defaultValue: 35.65
-                      }
+                      },
+                      ZOOM: {
+                        type: ArgumentType.NUMBER,
+                        defaultValue: 10
+                      },
                     }
                 },
                 {
@@ -86,7 +90,7 @@ class Scratch3Geolonia2ScratchBlocks {
     }
 
     panTo(args) {
-      this.map.panTo([args.LNG, args.LAT]);
+      this.map.flyTo({center: [args.LNG, args.LAT], zoom: 10});
     }
 
     setZoom(args) {
