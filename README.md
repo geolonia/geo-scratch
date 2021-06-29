@@ -6,7 +6,7 @@
 
 ```
 $ git clone git@github.com:geolonia/geo-scratch.git
-$ cd geo-scratch.git
+$ cd geo-scratch
 $ npm install
 $ npm start
 $ open http://127.0.0.1:8080
