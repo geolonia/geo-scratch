@@ -12,11 +12,6 @@ $ npm start
 $ open http://127.0.0.1:8080
 ```
 
-### 修正
-
-* `extensions/geolonia` 以下が Scratch のエクステンション本体
-* ファイルを修正したら `npm run rsync` で反映しないといけないので注意。
-
 ---
 
 # scratch-gui
