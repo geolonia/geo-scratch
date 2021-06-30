@@ -18,7 +18,7 @@ export default [
         insetIconURL: geoloniaInsetIconURL,
         description: (
             <FormattedMessage
-                defaultMessage="Learn GSI with Geolonia."
+                defaultMessage="Learn GIS with Geolonia."
                 description="Description for the 'geolonia' extension"
                 id="gui.extension.geolonia.description"
             />
