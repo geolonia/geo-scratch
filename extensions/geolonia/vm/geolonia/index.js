@@ -104,7 +104,7 @@ class Scratch3GeoloniaBlocks {
         div = document.createElement("div");
         div.id = 'geolonia-map';
         div.setAttribute("style", "width:100%;height:100%;position:absolute;top:0px;");
-        let canvas = document.getElementsByTagName('canvas')[0];
+        const canvas = document.getElementsByTagName('canvas')[0];
         canvas.parentNode.insertBefore(div, canvas);
 
         this.map = {}
