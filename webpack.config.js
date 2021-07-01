@@ -16,8 +16,7 @@ var postcssImport = require('postcss-import');
 
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
 
-// One-liner for current directory
-chokidar.watch('./extensions/').on('all', (event, path) => {
+const sync = () => {
     new Rsync()
         .flags('az')
         .source('extensions/geolonia/gui/')
@@ -33,7 +32,15 @@ chokidar.watch('./extensions/').on('all', (event, path) => {
         .execute((error, code, cmd) => {
             console.log(`OK: \`${cmd}\``)
         });
-});
+}
+
+if ('true' === process.env.WEBPACK_DEV_SERVER) {
+    chokidar.watch('./extensions/').on('all', (event, path) => {
+        sync()
+    });
+}
+
+sync()
 
 const base = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
