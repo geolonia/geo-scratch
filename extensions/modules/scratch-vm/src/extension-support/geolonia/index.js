@@ -111,18 +111,29 @@ class Scratch3GeoloniaBlocks {
                     arguments: {
                         DEGREE: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 0,
+                            defaultValue: 25,
                         },
                     }
                 },
                 {
-                    opcode: 'panBy',
+                    opcode: 'moveVertical',
                     blockType: BlockType.COMMAND,
-                    text: "地図を [DISTANCE] ピクセル移動する",
+                    text: "地図を縦に [DISTANCE] ピクセル移動する",
                     arguments: {
                         DISTANCE: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 0,
+                            defaultValue: 100,
+                        },
+                    }
+                },
+                {
+                    opcode: 'moveHorizontal',
+                    blockType: BlockType.COMMAND,
+                    text: "地図を横に [DISTANCE] ピクセル移動する",
+                    arguments: {
+                        DISTANCE: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 100,
                         },
                     }
                 },
@@ -199,9 +210,23 @@ class Scratch3GeoloniaBlocks {
         })
     }
 
-    panBy(args) {
+    moveVertical(args) {
         const promise = new Promise((resolve) => {
             this.map.panBy([0, args.DISTANCE], {
+                easing: this.easing
+            });
+
+            this.map.once('moveend', () => {
+                resolve()
+            })
+        })
+
+        return promise
+    }
+
+    moveHorizontal(args) {
+        const promise = new Promise((resolve) => {
+            this.map.panBy([args.DISTANCE, 0], {
                 easing: this.easing
             });
 
