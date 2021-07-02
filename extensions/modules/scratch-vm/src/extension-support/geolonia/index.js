@@ -179,7 +179,7 @@ class Scratch3GeoloniaBlocks {
             this.map = {}
             this.map = new geolonia.Map({
                 container: '#map',
-                style: 'geolonia/homework',
+                style: 'geolonia/midnight',
                 center: [args.LNG, args.LAT],
                 zoom: args.ZOOM,
                 pitch: 0,
