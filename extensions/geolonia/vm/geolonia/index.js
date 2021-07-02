@@ -51,10 +51,6 @@ const style = {
 class Scratch3GeoloniaBlocks {
     constructor (runtime) {
         this.runtime = runtime;
-
-        let script = document.createElement('script');
-        script.src = 'https://cdn.geolonia.com/v1/embed?geolonia-api-key=YOUR-API-KEY';
-        document.body.appendChild(script);
     }
 
     getInfo () {
@@ -95,21 +91,20 @@ class Scratch3GeoloniaBlocks {
     }
 
     displayMap(args) {
-        const mapContainer = document.getElementById('geolonia-map')
+        const mapContainer = document.getElementById('geolonia')
 
-        if (mapContainer) {
-            mapContainer.parentNode.removeChild(mapContainer)
+        if (document.getElementById('map')) {
+            mapContainer.removeChild(document.getElementById('map'))
         }
 
         div = document.createElement("div");
-        div.id = 'geolonia-map';
-        div.setAttribute("style", "width:100%;height:100%;position:absolute;top:0px;");
-        const canvas = document.getElementsByTagName('canvas')[0];
-        canvas.parentNode.insertBefore(div, canvas);
+        div.id = 'map';
+        div.setAttribute("style", "width:100%;height:100%;");
+        mapContainer.appendChild(div);
 
         this.map = {}
         this.map = new geolonia.Map({
-            container: '#geolonia-map',
+            container: '#map',
             style: 'geolonia/basic',
             center: [0, 0],
             zoom: 0,
