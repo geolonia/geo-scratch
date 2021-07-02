@@ -67,18 +67,18 @@ class Scratch3GeoloniaBlocks {
                     text: '地図を経度 [LNG] 緯度 [LAT] ズーム [ZOOM] で表示',
                     arguments: {
                         LNG: {
-                          type: ArgumentType.NUMBER,
-                          defaultValue: 0,
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 0,
                         },
                         LAT: {
-                          type: ArgumentType.NUMBER,
-                          defaultValue: 0,
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 0,
                         },
                         ZOOM: {
-                          type: ArgumentType.NUMBER,
-                          defaultValue: 10,
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 10,
                         },
-                      }
+                    }
                 },
                 {
                     opcode: 'flyTo',
@@ -97,6 +97,28 @@ class Scratch3GeoloniaBlocks {
                         type: ArgumentType.NUMBER,
                         defaultValue: 10,
                       },
+                    }
+                },
+                {
+                    opcode: 'bearingTo',
+                    blockType: BlockType.COMMAND,
+                    text: "地図を [DEGREE] 度回転する",
+                    arguments: {
+                        DEGREE: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 0,
+                        },
+                    }
+                },
+                {
+                    opcode: 'panBy',
+                    blockType: BlockType.COMMAND,
+                    text: "地図を [DISTANCE] ピクセル移動する",
+                    arguments: {
+                        DISTANCE: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 0,
+                        },
                     }
                 },
             ],
@@ -125,8 +147,8 @@ class Scratch3GeoloniaBlocks {
                 container: '#map',
                 style: 'geolonia/gsi',
                 center: [args.LNG, args.LAT],
-                zoom: args.LAT,
-                pitch: 40,
+                zoom: args.ZOOM,
+                pitch: 0,
             });
 
             this.map.once('load', () => {
@@ -135,9 +157,12 @@ class Scratch3GeoloniaBlocks {
         })
     }
 
-    flyTo(args) {
+    bearingTo(args) {
         const promise = new Promise((resolve) => {
-            this.map.flyTo({center: [args.LNG, args.LAT], zoom: args.LAT});
+            this.map.easeTo({
+                bearing: this.map.getBearing() - args.DEGREE,
+                easing: this.easing
+            });
 
             this.map.once('moveend', () => {
                 resolve()
@@ -145,6 +170,36 @@ class Scratch3GeoloniaBlocks {
         })
 
         return promise
+    }
+
+    panBy(args) {
+        const promise = new Promise((resolve) => {
+            this.map.panBy([0, args.DISTANCE], {
+                easing: this.easing
+            });
+
+            this.map.once('moveend', () => {
+                resolve()
+            })
+        })
+
+        return promise
+    }
+
+    flyTo(args) {
+        const promise = new Promise((resolve) => {
+            this.map.flyTo({center: [args.LNG, args.LAT], zoom: args.ZOOM});
+
+            this.map.once('moveend', () => {
+                resolve()
+            })
+        })
+
+        return promise
+    }
+
+    easing(t) {
+        return t * (2 - t);
     }
 
     setLocale() {
