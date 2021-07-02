@@ -2,7 +2,7 @@ const ArgumentType = require('../../extension-support/argument-type');
 const BlockType = require('../../extension-support/block-type');
 const Cast = require('../../util/cast');
 const formatMessage = require('format-message');
-const { resolve } = require('core-js/fn/promise');
+const { openReverseGeocoder } = require('@geolonia/open-reverse-geocoder');
 
 const Message = {
 }
@@ -52,6 +52,11 @@ const style = {
 class Scratch3GeoloniaBlocks {
     constructor (runtime) {
         this.runtime = runtime;
+        this.addr = {
+            code: '',
+            prefecture: '',
+            city: ''
+        }
     }
 
     getInfo () {
@@ -121,14 +126,32 @@ class Scratch3GeoloniaBlocks {
                         },
                     }
                 },
+                {
+                    opcode: 'getPref',
+                    blockType: BlockType.REPORTER,
+                    text: "都道府県名",
+                },
+                {
+                    opcode: 'getCity',
+                    blockType: BlockType.REPORTER,
+                    text: "市区町村名",
+                },
             ],
             menus: {
             }
         };
     }
 
+    getPref() {
+        return this.addr.prefecture
+    }
+
+    getCity() {
+        return this.addr.city
+    }
+
     displayMap(args) {
-        const promise = new Promise((resolve) => {
+        return new Promise((resolve) => {
             const mapContainer = document.getElementById('geolonia')
 
             if (document.getElementById('map')) {
@@ -145,20 +168,26 @@ class Scratch3GeoloniaBlocks {
             this.map = {}
             this.map = new geolonia.Map({
                 container: '#map',
-                style: 'geolonia/gsi',
+                style: 'geolonia/homework',
                 center: [args.LNG, args.LAT],
                 zoom: args.ZOOM,
                 pitch: 0,
             });
 
             this.map.once('load', () => {
+                this.map.on('moveend', () => {
+                    openReverseGeocoder(Object.values(this.map.getCenter())).then(res => {
+                        this.addr = res
+                    })
+                })
+
                 resolve()
             })
         })
     }
 
     bearingTo(args) {
-        const promise = new Promise((resolve) => {
+        return new Promise((resolve) => {
             this.map.easeTo({
                 bearing: this.map.getBearing() - args.DEGREE,
                 easing: this.easing
@@ -168,8 +197,6 @@ class Scratch3GeoloniaBlocks {
                 resolve()
             })
         })
-
-        return promise
     }
 
     panBy(args) {

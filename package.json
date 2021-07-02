@@ -26,6 +26,7 @@
     "url": "git+ssh://git@github.com/LLK/scratch-gui.git"
   },
   "dependencies": {
+    "@geolonia/open-reverse-geocoder": "^0.0.7",
     "arraybuffer-loader": "^1.0.6",
     "autoprefixer": "^9.0.1",
     "base64-loader": "1.0.0",
