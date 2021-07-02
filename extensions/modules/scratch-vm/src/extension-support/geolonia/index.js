@@ -101,13 +101,14 @@ class Scratch3GeoloniaBlocks {
         div.id = 'map';
         div.setAttribute("style", "width:100%;height:100%;");
         div.dataset.navigationControl = 'off';
+        div.dataset.pitch = 40;
 
         mapContainer.appendChild(div);
 
         this.map = {}
         this.map = new geolonia.Map({
             container: '#map',
-            style: 'geolonia/basic',
+            style: 'geolonia/gsi',
             center: [0, 0],
             zoom: 0,
         });
@@ -115,7 +116,7 @@ class Scratch3GeoloniaBlocks {
 
     flyTo(args) {
         const promise = new Promise((resolve) => {
-            this.map.flyTo({center: [args.LNG, args.LAT], zoom: 10});
+            this.map.flyTo({center: [args.LNG, args.LAT], zoom: args.LAT});
 
             this.map.once('moveend', () => {
                 resolve()
