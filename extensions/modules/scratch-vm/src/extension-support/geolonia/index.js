@@ -100,6 +100,8 @@ class Scratch3GeoloniaBlocks {
         div = document.createElement("div");
         div.id = 'map';
         div.setAttribute("style", "width:100%;height:100%;");
+        div.dataset.navigationControl = 'off';
+
         mapContainer.appendChild(div);
 
         this.map = {}
