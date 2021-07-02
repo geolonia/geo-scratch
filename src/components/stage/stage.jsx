@@ -52,7 +52,7 @@ const StageComponent = props => {
                         width: stageDimensions.width
                     }}
                 >
-                    <div id="geolonia" style={{width: '100%', height: '100%', position: 'absolute', top: '0px'}}></div>
+                    <div id="geolonia" style={{width: '100%', height: '100%', position: 'absolute', top: '0px', backgroundColor: '#ffffff'}}></div>
                     <DOMElementRenderer
                         domElement={canvas}
                         style={{

@@ -27,8 +27,8 @@ const sync = () => {
 
     new Rsync()
         .flags('az')
-        .source('extensions/geolonia/vm/')
-        .destination('node_modules/scratch-vm/src/extension-support/')
+        .source('extensions/modules/')
+        .destination('node_modules/')
         .execute((error, code, cmd) => {
             console.log(`OK: \`${cmd}\``)
         });
