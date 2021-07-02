@@ -193,7 +193,6 @@ class Scratch3GeoloniaBlocks {
                 })
 
                 const resizeObserver = new ResizeObserver(entries => {
-                    console.log('aaaaaaaaaaaaa')
                     this.map.resize()
                 });
 
