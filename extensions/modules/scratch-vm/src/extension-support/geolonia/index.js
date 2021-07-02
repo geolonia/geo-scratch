@@ -57,6 +57,7 @@ class Scratch3GeoloniaBlocks {
             prefecture: '',
             city: ''
         }
+        this.center = {lng: 0, lat: 0}
     }
 
     getInfo () {
@@ -147,10 +148,28 @@ class Scratch3GeoloniaBlocks {
                     blockType: BlockType.REPORTER,
                     text: "市区町村名",
                 },
+                {
+                    opcode: 'getLat',
+                    blockType: BlockType.REPORTER,
+                    text: "緯度",
+                },
+                {
+                    opcode: 'getLng',
+                    blockType: BlockType.REPORTER,
+                    text: "経度",
+                },
             ],
             menus: {
             }
         };
+    }
+
+    getLat() {
+        return `${this.center.lat.toFixed(4)}`
+    }
+
+    getLng() {
+        return `${this.center.lng.toFixed(4)}`
     }
 
     getPref() {
@@ -190,6 +209,8 @@ class Scratch3GeoloniaBlocks {
                     openReverseGeocoder(Object.values(this.map.getCenter())).then(res => {
                         this.addr = res
                     })
+
+                    this.center = this.map.getCenter()
                 })
 
                 const resizeObserver = new ResizeObserver(entries => {
