@@ -114,7 +114,15 @@ class Scratch3GeoloniaBlocks {
     }
 
     flyTo(args) {
-      this.map.flyTo({center: [args.LNG, args.LAT], zoom: 10});
+        const promise = new Promise((resolve) => {
+            this.map.flyTo({center: [args.LNG, args.LAT], zoom: 10});
+
+            this.map.once('moveend', () => {
+                resolve()
+            })
+        })
+
+        return promise
     }
 
     setLocale() {
