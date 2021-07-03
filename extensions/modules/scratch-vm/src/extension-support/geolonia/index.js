@@ -184,12 +184,12 @@ class Scratch3GeoloniaBlocks {
         return new Promise((resolve) => {
             const mapContainer = document.getElementById('geolonia')
 
-            if (document.getElementById('map')) {
-                mapContainer.removeChild(document.getElementById('map'))
+            if (document.getElementById('geolonia-map')) {
+                mapContainer.removeChild(document.getElementById('geolonia-map'))
             }
 
             div = document.createElement("div");
-            div.id = 'map';
+            div.id = 'geolonia-map';
             div.setAttribute("style", "width:100%;height:100%;");
             div.dataset.navigationControl = 'off';
 
@@ -197,8 +197,8 @@ class Scratch3GeoloniaBlocks {
 
             this.map = {}
             this.map = new geolonia.Map({
-                container: '#map',
-                style: 'geolonia/midnight',
+                container: '#geolonia-map',
+                style: 'https://raw.githubusercontent.com/geolonia/scratch-style/main/style.json',
                 center: [args.LNG, args.LAT],
                 zoom: args.ZOOM,
                 pitch: 0,
