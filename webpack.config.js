@@ -1,6 +1,8 @@
 const defaultsDeep = require('lodash.defaultsdeep');
 var path = require('path');
 var webpack = require('webpack');
+var chokidar = require('chokidar');
+var Rsync = require('rsync');
 
 // Plugins
 var CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -13,6 +15,32 @@ var postcssVars = require('postcss-simple-vars');
 var postcssImport = require('postcss-import');
 
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
+
+const sync = () => {
+    new Rsync()
+        .flags('az')
+        .source('extensions/geolonia/gui/')
+        .destination('src/lib/libraries/extensions/')
+        .execute((error, code, cmd) => {
+            console.log(`OK: \`${cmd}\``)
+        });
+
+    new Rsync()
+        .flags('az')
+        .source('extensions/modules/')
+        .destination('node_modules/')
+        .execute((error, code, cmd) => {
+            console.log(`OK: \`${cmd}\``)
+        });
+}
+
+if ('true' === process.env.WEBPACK_DEV_SERVER) {
+    chokidar.watch('./extensions/').on('all', (event, path) => {
+        sync()
+    });
+}
+
+sync()
 
 const base = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
@@ -28,7 +56,7 @@ const base = {
         chunkFilename: 'chunks/[name].js'
     },
     resolve: {
-        symlinks: true
+        symlinks: false
     },
     module: {
         rules: [{
