@@ -58,6 +58,8 @@ class Scratch3GeoloniaBlocks {
             city: ''
         }
         this.center = {lng: 0, lat: 0}
+
+        this.loaded = false
     }
 
     getInfo () {
@@ -103,6 +105,17 @@ class Scratch3GeoloniaBlocks {
                         type: ArgumentType.NUMBER,
                         defaultValue: 10,
                       },
+                    }
+                },
+                {
+                    opcode: 'zoomTo',
+                    blockType: BlockType.COMMAND,
+                    text: "地図のズームレベルを [ZOOM] 変更する",
+                    arguments: {
+                        ZOOM: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 1,
+                        },
                     }
                 },
                 {
@@ -219,12 +232,37 @@ class Scratch3GeoloniaBlocks {
 
                 resizeObserver.observe(mapContainer);
 
+                this.loaded = true
+
+                resolve()
+            })
+        })
+    }
+
+    zoomTo(args) {
+        if (!this.loaded) {
+            console.error('まず地図を表示してください。')
+            return
+        }
+
+        return new Promise((resolve) => {
+            this.map.easeTo({
+                zoom: this.map.getZoom() + parseFloat(args.ZOOM),
+                easing: this.easing
+            });
+
+            this.map.once('moveend', () => {
                 resolve()
             })
         })
     }
 
     bearingTo(args) {
+        if (!this.loaded) {
+            console.error('まず地図を表示してください。')
+            return
+        }
+
         return new Promise((resolve) => {
             this.map.easeTo({
                 bearing: this.map.getBearing() - args.DEGREE,
@@ -238,6 +276,11 @@ class Scratch3GeoloniaBlocks {
     }
 
     moveVertical(args) {
+        if (!this.loaded) {
+            console.error('まず地図を表示してください。')
+            return
+        }
+
         const promise = new Promise((resolve) => {
             this.map.panBy([0, args.DISTANCE], {
                 easing: this.easing
@@ -252,6 +295,11 @@ class Scratch3GeoloniaBlocks {
     }
 
     moveHorizontal(args) {
+        if (!this.loaded) {
+            console.error('まず地図を表示してください。')
+            return
+        }
+
         const promise = new Promise((resolve) => {
             this.map.panBy([args.DISTANCE, 0], {
                 easing: this.easing
@@ -266,6 +314,11 @@ class Scratch3GeoloniaBlocks {
     }
 
     flyTo(args) {
+        if (!this.loaded) {
+            console.error('まず地図を表示してください。')
+            return
+        }
+
         const promise = new Promise((resolve) => {
             this.map.flyTo({center: [args.LNG, args.LAT], zoom: args.ZOOM});
 
