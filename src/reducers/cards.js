@@ -1,4 +1,4 @@
-import analytics from '../lib/analytics';
+// import analytics from '../lib/analytics';
 
 import decks from '../lib/libraries/decks/index.jsx';
 
