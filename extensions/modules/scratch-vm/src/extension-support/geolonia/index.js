@@ -58,7 +58,7 @@ class Scratch3GeoloniaBlocks {
             city: ''
         }
         this.center = {lng: 0, lat: 0}
-
+        this.features = []
         this.loaded = false
     }
 
@@ -171,6 +171,11 @@ class Scratch3GeoloniaBlocks {
                     blockType: BlockType.REPORTER,
                     text: "経度",
                 },
+                {
+                    opcode: 'getName',
+                    blockType: BlockType.REPORTER,
+                    text: "場所の名前",
+                },
             ],
             menus: {
             }
@@ -191,6 +196,16 @@ class Scratch3GeoloniaBlocks {
 
     getCity() {
         return this.addr.city
+    }
+
+    getName() {
+        for (let i = 0; i < this.features.length; i++) {
+            if ('symbol' === this.features[i].layer.type && this.features[i].properties.name) {
+                return this.features[i].properties.name
+            }
+        }
+
+        return ''
     }
 
     displayMap(args) {
@@ -218,12 +233,16 @@ class Scratch3GeoloniaBlocks {
             });
 
             this.map.once('load', () => {
-                this.map.on('moveend', () => {
-                    openReverseGeocoder(Object.values(this.map.getCenter())).then(res => {
+                this.map.on('moveend', (e) => {
+                    this.center = this.map.getCenter()
+
+                    openReverseGeocoder(Object.values(this.center)).then(res => {
                         this.addr = res
                     })
 
-                    this.center = this.map.getCenter()
+                    this.features = this.map.queryRenderedFeatures(this.map.project(this.center), {
+                        layers: ['poi']
+                    })
                 })
 
                 const resizeObserver = new ResizeObserver(entries => {
