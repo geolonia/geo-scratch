@@ -76,11 +76,11 @@ class Scratch3GeoloniaBlocks {
                     arguments: {
                         LNG: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 0,
+                            defaultValue: 139.74,
                         },
                         LAT: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 0,
+                            defaultValue: 35.65,
                         },
                         ZOOM: {
                             type: ArgumentType.NUMBER,
