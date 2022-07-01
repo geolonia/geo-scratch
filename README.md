@@ -1,5 +1,7 @@
 # Geolonia on Scratch
 
+![nekozilla](images/nekozilla.gif)
+
 ## ワークフロー
 
 ### ローカルでの起動
